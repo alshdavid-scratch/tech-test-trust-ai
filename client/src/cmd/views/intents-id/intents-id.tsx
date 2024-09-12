@@ -6,22 +6,21 @@ import { IntentsService } from '../../../platform/intents/intents-service.ts';
 import { PieChart } from '../../components/pie-chart/pie-chart.tsx';
 import { Panel, PanelHeader, PanelList, PanelListItem, PanelSection } from '../../components/panel/panel.tsx';
 import { useRouter } from 'preact-router';
+import { Redirect } from '../../components/redirect/redirect.tsx';
 
 export function IntentsIdView() {
-  const [router, route] = useRouter()
+  const [router] = useRouter()
   const categoriesService = useInject(CategoryService)
   const intentsService = useInject(IntentsService)
 
   const selectedCategory = router.matches?.selectedCategory
   if (!selectedCategory) {
-    route('/category/all')
-    return null
+    return <Redirect to="/category/all" />
   }
 
   const intentsForCategory = categoriesService.getIntents(selectedCategory)
   if (!intentsForCategory) {
-    route('/category/all')
-    return null
+    return <Redirect to="/category/all" />
   }
 
   const intentsListForCategory = Array.from(intentsForCategory.keys())

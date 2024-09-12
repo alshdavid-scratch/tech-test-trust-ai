@@ -46,6 +46,20 @@ export class CategoryService extends EventTarget {
     this.dispatchEvent(new Event('change'))
   }
 
+  getCategorySummary(): Map<string, number> {
+    const intentList: Array<[string, number]> = []
+    
+    for (const category in this.#inner) {
+      const intents = this.getIntents(category) || new Map()
+      const sum = Array.from(intents.values()).reduce((p, c) => p + c, 0)
+      intentList.push([category, sum])
+    }
+
+    intentList.sort((a, b) => b[1] - a[1])
+
+    return new Map(intentList)
+  }
+
   getIntents(name: string): IntentsMap | undefined {
     if (name === 'all') {
       return this.#intentsService.getIntents()

@@ -8,7 +8,7 @@ export function IntentsAllView() {
   const intentsService = useInject(IntentsService)
 
   const intents = intentsService.getIntents()
-  console.log(intents)
+  
   return <div class="view-intents-id">
     <PanelHeader>
       <div>All Intents</div>

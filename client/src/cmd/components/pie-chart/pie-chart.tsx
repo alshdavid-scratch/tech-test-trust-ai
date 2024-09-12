@@ -35,5 +35,5 @@ export function PieChart({rawData, ...props}: PieChartProps) {
     GoogleCharts.load(drawChart);
   }
 
-  return <div {...props} ref={onElement} class="pie-chart"></div>
+  return <div {...props} ref={onElement} class="component-pie-chart"></div>
 }

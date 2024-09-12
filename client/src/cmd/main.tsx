@@ -34,7 +34,6 @@ function App() {
     <AppContext.Provider value={services}>
       <Router>
         <Route path="/" component={Page(HomeView)} />
-        <Route path="/home/:id" component={Page(HomeView)} />
         <Route path="/category/:selectedCategory" component={Page(IntentsIdView)} />
         <Route path="/category/all" component={Page(IntentsAllView)} />
         <Route default component={Page(NotFoundView)} />
