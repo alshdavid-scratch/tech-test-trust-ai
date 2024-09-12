@@ -5,6 +5,8 @@ import { CategoryService } from '../../../platform/categories/category-service.t
 import { IntentsService } from '../../../platform/intents/intents-service.ts';
 import { useState } from 'preact/hooks';
 import { PieChart } from '../../components/pie-chart/pie-chart.tsx';
+import { classNames } from '../../../platform/elements/class-names.ts';
+import { Panel, PanelHeader, PanelList, PanelListItem, PanelSection } from '../../components/panel/panel.tsx';
 
 export function HomeView() {
   const categoriesService = useInject(CategoryService)
@@ -31,7 +33,6 @@ export function HomeView() {
     return null
   }
   const intentsListForCategory = Array.from(intentsForCategory.keys())
-
   const intentsToAdd = allIntentsList.filter(v => !intentsListForCategory.includes(v))
 
   return <div class="view-home">
@@ -56,93 +57,45 @@ export function HomeView() {
       
     </div>
     <div class="tags">
-      <div class="panel-header tags-header">
+      <PanelHeader>
         <div>Category: {selectedCategory}</div>
         <button onClick={() => categoriesService.removeCategory(selectedCategory)}>Delete</button>
-      </div>
+      </PanelHeader>
 
-      <div class="summary">
-        <PieChart rawData={{foo: 10}} style={{ height: '400px'}} />
-      </div>
+      <PanelSection class="summary">
+        <PieChart rawData={Object.fromEntries(intentsForCategory)} style={{ height: '400px'}} />
+      </PanelSection>
 
-      <div class="panel-list">
-        <div class="panel-header panel-add-header">
-            <div>Included Intents</div>
-        </div>
+      <Panel class="panel-included-intents">
+        <PanelHeader>
+          Included Intents
+        </PanelHeader>
 
+        <PanelList>
+          {intentsListForCategory.map(intent => (
+            <PanelListItem>
+              {intent}
+              <button onClick={() => categoriesService.removeIntent(selectedCategory, intent)}>X</button>
+            </PanelListItem>))}
+        </PanelList>
+      </Panel>
 
-        {!intentsListForCategory.length && <div class="no-items">No Items</div>}
-        {intentsListForCategory.map(intent => (
-          <div 
-            class="list-item"
-            >{intent}
-            <button onClick={() => categoriesService.removeIntent(selectedCategory, intent)}>X</button>
-          </div>))}
-      </div>
+      {selectedCategory !== 'all' && (
+        <Panel class="panel-add-intents">
+          <PanelHeader>
+            Add Intents
+          </PanelHeader>
 
-      {
-        selectedCategory !== 'all' && (
-        <div class="panel-add">
-          <div class="panel-header panel-add-header">
-            <div>Add Intents</div>
-          </div>
-          <div class="panel-add-list">
+          <PanelList>
             {intentsToAdd.map(intent => (
-              <div 
-                class="list-item"
-                onClick={() => categoriesService.addIntent(selectedCategory, intent)}
-                >{intent}</div>
-              ))}
-          </div>
-        </div>)
-      }
+              <PanelListItem 
+                onClick={() => categoriesService.addIntent(selectedCategory, intent)}>
+                {intent}
+              </PanelListItem>
+            ))}
+          </PanelList>
+        </Panel>
+      )}
     </div>     
   </div>
 }
-
-
-const classNames = (input: Record<string, boolean>): string => {
-  let className = ''
-  for (const [item, enabled] of Object.entries(input)) {
-    if (!enabled) continue
-    className += ` ${item}`
-  }
-  return className
-}
-
-/*
-
-const categoryInput = useInput({ 
-    initialValue: '', 
-    onEnter: (value) => {
-      categoriesService.newCategory(value)
-      categoryInput.reset()
-    }
-  })
-
-
-    <div class="raw-intents">
-      {intentsService.getIntents().map(intent => <div>{intent}</div>)}
-    </div>
-    <div class="categories">
-      <div>
-        <input type="text" {...categoryInput} />
-        <button onClick={() => categoryInput.triggerEnter()}>Add</button>
-      </div>
-      {categoriesService.entries().map(([name, tags]) => <div>
-        <div>
-          <button onClick={() => categoriesService.removeCategory(name)}>X</button>
-          <span>{name}</span>
-        </div>
-        <div>
-          <input list={name} type="text" />
-          <datalist id={name}>
-            {intentsService.getIntents().map(intent => <option value={intent}>{intent}</option>)}
-          </datalist>
-        </div>
-        <div>
-          {intentsService.getIntentsForTags(...tags)}
-        </div>
-      </div>)}
-    </div>
-*/

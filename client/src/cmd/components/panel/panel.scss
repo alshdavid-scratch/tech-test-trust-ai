@@ -1,0 +1,65 @@
+.component-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.component-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  height: 40px;
+  flex-shrink: 0;
+  background: #eee;
+  border-bottom: 1px solid #999;
+  border-top: 1px solid #999;
+
+  &:first-of-type {
+    border-top: none;
+  }
+}
+
+.component-panel-section {
+  &.scrollable {
+    overflow-y: scroll;
+  }
+}
+
+.component-panel-list {
+  overflow-y: scroll;
+  flex: 1;
+
+  &.empty {
+    &:after {
+      content: 'No Items';
+      display: block;
+      padding: 20px;
+      font-size: 20px;
+      opacity: 0.5;
+    }
+  }
+}
+
+.component-panel-list-item {
+  padding: 4px 8px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #eee;
+    }
+
+    &:active {
+      background-color: #dddddd;
+    }
+
+    &.selected {
+      background-color: #eee;
+    }
+  }
+}
