@@ -45,6 +45,10 @@ const config = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
         type: 'javascript/auto',
       },
+      {
+        test: /\.(txt)$/,
+        type: "asset/source",
+      },
     ]
   },
   plugins: [
