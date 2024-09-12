@@ -1,0 +1,7 @@
+set windows-shell := ["pwsh", "-NoLogo", "-NoProfileLoadTime", "-Command"]
+
+build:
+  npx rspack --mode production -c ./rspack.config.cjs
+
+dev:
+  npx rspack dev --mode production -c ./rspack.config.cjs

@@ -1,0 +1,17 @@
+{
+  "name": "@workspace/root",
+  "workspaces": [
+    "./client"
+  ],
+  "devDependencies": {
+    "@rspack/cli": "*",
+    "@rspack/core": "*",
+    "css-loader": "*",
+    "preact": "*",
+    "sass": "*",
+    "sass-embedded": "*",
+    "sass-loader": "*",
+    "style-loader": "*",
+    "typescript": "*"
+  }
+}
