@@ -18,14 +18,22 @@ export function HomeView() {
     categoriesService.newCategory(value)
   }
 
+  
   const selectedIntents = selectedCategory === 'all' 
     ? intentsService.getIntents()
     : categoriesService.getIntents(selectedCategory)
+  
+  if (!selectedIntents) {
+    setSelectedCategory('all')
+    return null
+  }
 
   const intentsToAdd = intentsService.getIntents().filter(v => !selectedIntents.includes(v))
 
   return <div class="view-home">
     <div class="categories">
+      <div className="heading">Intents</div>
+
       <div 
         class={classNames({ 'item': true, 'selected': selectedCategory === 'all'})} 
         onClick={() => setSelectedCategory('all')}
@@ -37,15 +45,26 @@ export function HomeView() {
         <div 
           class={classNames({ 'item': true, 'selected': selectedCategory === name})}
           onClick={() => setSelectedCategory(name)}
-          >{name} <span>[{categoriesService.getIntents(name).length}]</span></div>
+          >{name} <span>[{categoriesService.getIntents(name)?.length}]</span></div>
       ))}
 
       <div className="heading">Automatic Categories</div>
-
       
     </div>
     <div class="tags">
+      <div class="panel-header tags-header">
+        <div>Category: {selectedCategory}</div>
+        <button onClick={() => categoriesService.removeCategory(selectedCategory)}>Delete</button>
+      </div>
+
+      <div class="summary"></div>
+
       <div class="panel-list">
+        <div class="panel-header panel-add-header">
+            <div>Included Intents</div>
+        </div>
+
+
         {!selectedIntents.length && <div class="no-items">No Items</div>}
         {selectedIntents.map(intent => (
           <div 
@@ -54,11 +73,12 @@ export function HomeView() {
             <button onClick={() => categoriesService.removeIntent(selectedCategory, intent)}>X</button>
           </div>))}
       </div>
+
       {
         selectedCategory !== 'all' && (
         <div class="panel-add">
-          <div class="panel-add-header">
-            <div>Add Items</div>
+          <div class="panel-header panel-add-header">
+            <div>Add Intents</div>
           </div>
           <div class="panel-add-list">
             {intentsToAdd.map(intent => (

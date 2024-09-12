@@ -40,8 +40,8 @@ export class CategoryService extends EventTarget {
     this.dispatchEvent(new Event('change'))
   }
 
-  getIntents(name: string): string[] {
-    return this.#inner[name] || []
+  getIntents(name: string): string[] | undefined {
+    return this.#inner[name]
   }
 
   entries(): Array<[string, string[]]> {
