@@ -1,14 +1,116 @@
 .view-home {
-  display: flex;
+  height: 100%;
+  flex: 1;
+  position: relative;
 
-  .raw-intents {
-    width: 50%;
-    border-right: 1px solid #eee;
+  .categories, .tags {
+    position: absolute;    
+    top: 0;
+    bottom: 0;
+  }
 
-    div {
-      padding: 8px 0;
+  .categories {
+    left: 0;
+    width: 300px;
+    border-right: 1px solid #999;
+
+    .item {
+      cursor: pointer;
+      padding: 4px 8px;
       border-bottom: 1px solid #eee;
+      position: relative;
 
+      span {
+        float: right;
+        margin-right: 20px;
+      }
+
+      &:after {
+        content: '>';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 18px;
+        display: flex;
+        align-items: center;
+      }
+
+      &.selected {
+        background-color: #ddd;
+      }
+    }
+
+    .heading {
+      padding: 4px 8px;
+      background-color: #333;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .tags {
+    right: 0;
+    width: calc(100% - 300px);
+    display: flex;
+    flex-direction: column;
+
+    .no-items {
+      padding: 20px;
+      font-size: 20px;
+      opacity: 0.5;
+    }
+
+    .list-item {
+      padding: 4px 8px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-list {
+      flex: 1;
+      overflow-y: scroll;
+    }
+
+    .panel-add {
+      height: 30%;
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #999;
+
+      .panel-add-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 8px;
+        height: 40px;
+        background: #eee;
+        border-bottom: 1px solid #999;
+      }
+      
+      .panel-add-list {
+        flex: 1;
+        overflow-y: scroll;
+
+        .list-item {
+          cursor: pointer;
+
+          &:hover {
+            background-color: #eee;
+          }
+
+          &:active {
+            background-color: #dddddd;
+          }
+
+          &.selected {
+            background-color: #eee;
+          }
+        }
+      }
     }
   }
 }

@@ -26,10 +26,22 @@ export class CategoryService extends EventTarget {
     this.dispatchEvent(new Event('change'))
   }
 
-  addTagToCategory(name: string, key: string) {
+  addIntent(name: string, key: string) {
     this.#inner[name] = this.#inner[name] || []
     this.#inner[name].push(key)
+    window.localStorage.setItem(KEY, JSON.stringify(this.#inner))
     this.dispatchEvent(new Event('change'))
+  }
+
+  removeIntent(name: string, key: string) {
+    this.#inner[name] = this.#inner[name] || []
+    this.#inner[name] = this.#inner[name].filter(n => n !== key)
+    window.localStorage.setItem(KEY, JSON.stringify(this.#inner))
+    this.dispatchEvent(new Event('change'))
+  }
+
+  getIntents(name: string): string[] {
+    return this.#inner[name] || []
   }
 
   entries(): Array<[string, string[]]> {
