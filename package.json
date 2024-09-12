@@ -8,6 +8,7 @@
     "@rspack/core": "*",
     "css-loader": "*",
     "preact": "*",
+    "preact-iso": "*",
     "sass": "*",
     "sass-embedded": "*",
     "sass-loader": "*",

@@ -49,11 +49,16 @@ const config = {
   },
   plugins: [
     new HtmlRspackPlugin({
-      filename: path.join(__dirname, 'src', 'cmd', 'index.html')
+      filename: 'index.html',
+      template: path.join(__dirname, 'src', 'cmd', 'index.html'),
     })
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', 'jsx', 'css', 'scss'],
+  },
+  devServer: {
+    hot: false,
+    historyApiFallback: true,
   },
 }
 
