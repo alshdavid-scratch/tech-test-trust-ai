@@ -4,6 +4,7 @@ import { useInject } from '../../contexts/app.tsx';
 import { CategoryService } from '../../../platform/categories/category-service.ts';
 import { IntentsService } from '../../../platform/intents/intents-service.ts';
 import { useState } from 'preact/hooks';
+import { PieChart } from '../../components/pie-chart/pie-chart.tsx';
 
 export function HomeView() {
   const categoriesService = useInject(CategoryService)
@@ -18,17 +19,20 @@ export function HomeView() {
     categoriesService.newCategory(value)
   }
 
+  const allIntents = intentsService.getIntents()
+  const allIntentsList = Array.from(allIntents.keys())
   
-  const selectedIntents = selectedCategory === 'all' 
-    ? intentsService.getIntents()
-    : categoriesService.getIntents(selectedCategory)
-  
-  if (!selectedIntents) {
+  const intentsForCategory = selectedCategory !== 'all' 
+    ? categoriesService.getIntents(selectedCategory) 
+    : allIntents
+
+  if (!intentsForCategory) {
     setSelectedCategory('all')
     return null
   }
+  const intentsListForCategory = Array.from(intentsForCategory.keys())
 
-  const intentsToAdd = intentsService.getIntents().filter(v => !selectedIntents.includes(v))
+  const intentsToAdd = allIntentsList.filter(v => !intentsListForCategory.includes(v))
 
   return <div class="view-home">
     <div class="categories">
@@ -37,7 +41,7 @@ export function HomeView() {
       <div 
         class={classNames({ 'item': true, 'selected': selectedCategory === 'all'})} 
         onClick={() => setSelectedCategory('all')}
-        >All <span>[{intentsService.getIntents().length}]</span></div>
+        >All <span>[{allIntents.size}]</span></div>
 
       <div className="heading">Custom Categories <button onClick={addCategory}>+</button></div>
 
@@ -45,7 +49,7 @@ export function HomeView() {
         <div 
           class={classNames({ 'item': true, 'selected': selectedCategory === name})}
           onClick={() => setSelectedCategory(name)}
-          >{name} <span>[{categoriesService.getIntents(name)?.length}]</span></div>
+          >{name} <span>[{categoriesService.getIntents(name)?.size}]</span></div>
       ))}
 
       <div className="heading">Automatic Categories</div>
@@ -57,7 +61,9 @@ export function HomeView() {
         <button onClick={() => categoriesService.removeCategory(selectedCategory)}>Delete</button>
       </div>
 
-      <div class="summary"></div>
+      <div class="summary">
+        <PieChart rawData={{foo: 10}} style={{ height: '400px'}} />
+      </div>
 
       <div class="panel-list">
         <div class="panel-header panel-add-header">
@@ -65,8 +71,8 @@ export function HomeView() {
         </div>
 
 
-        {!selectedIntents.length && <div class="no-items">No Items</div>}
-        {selectedIntents.map(intent => (
+        {!intentsListForCategory.length && <div class="no-items">No Items</div>}
+        {intentsListForCategory.map(intent => (
           <div 
             class="list-item"
             >{intent}

@@ -10,8 +10,11 @@ import { IntentsService } from '../platform/intents/intents-service.ts'
 
 const services = new Map()
 
-services.set(CategoryService, new CategoryService())
-services.set(IntentsService, new IntentsService())
+const intentsService = new IntentsService()
+const categoryService = new CategoryService(intentsService)
+
+services.set(CategoryService, categoryService)
+services.set(IntentsService, intentsService)
 
 function App() {
   return <Fragment>
