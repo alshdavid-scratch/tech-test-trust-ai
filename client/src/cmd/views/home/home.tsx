@@ -36,7 +36,7 @@ export function HomeView() {
   const intentsToAdd = allIntentsList.filter(v => !intentsListForCategory.includes(v))
 
   return <div class="view-home">
-    <div class="categories">
+    {/* <div class="categories">
       <div className="heading">Intents</div>
 
       <div 
@@ -96,6 +96,6 @@ export function HomeView() {
           </PanelList>
         </Panel>
       )}
-    </div>     
+    </div>      */}
   </div>
 }

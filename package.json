@@ -10,6 +10,7 @@
     "google-charts": "^2.0.0",
     "preact": "*",
     "preact-iso": "*",
+    "preact-router": "^4.1.2",
     "sass": "*",
     "sass-embedded": "*",
     "sass-loader": "*",

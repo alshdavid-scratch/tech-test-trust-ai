@@ -47,6 +47,9 @@ export class CategoryService extends EventTarget {
   }
 
   getIntents(name: string): IntentsMap | undefined {
+    if (name === 'all') {
+      return this.#intentsService.getIntents()
+    }
     const intents = this.#inner[name]
     if (!intents) {
       return undefined

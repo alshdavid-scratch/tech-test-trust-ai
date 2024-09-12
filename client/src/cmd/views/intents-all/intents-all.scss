@@ -1,0 +1,13 @@
+.view-intents-id {
+  display: flex;
+  flex-direction: column;
+
+  .summary {
+    flex: 1;
+    overflow-y: scroll;
+  }
+
+  .panel-add-intents, .panel-included-intents {
+    height: 25%;
+  }
+}

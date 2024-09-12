@@ -6,6 +6,7 @@ if (fs.existsSync(path.join(__dirname, 'dist'))) {
   fs.rmSync(path.join(__dirname, 'dist'), { recursive: true })
 }
 
+/** @type {import('@rspack/core').Configuration} */
 const config = {
   devtool: false,
   experiments: {
@@ -14,6 +15,7 @@ const config = {
   output: {
     filename: 'index.js',
     path: path.join(__dirname, 'dist'),
+    publicPath: '/'
   },
   module: {
     rules: [

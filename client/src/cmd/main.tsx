@@ -3,10 +3,13 @@ import { h, render, Fragment } from 'preact'
 import { AppContext } from './contexts/app.tsx'
 import { HomeView } from './views/home/home.tsx'
 import { NotFoundView } from './views/not-found/not-found.tsx'
-import { LocationProvider, ErrorBoundary, Router, Route } from 'preact-iso';
+import { IntentsIdView } from './views/intents-id/intents-id.tsx'
+import { Router, Route } from 'preact-router';
 import { Header } from './components/header/header.tsx';
 import { CategoryService } from '../platform/categories/category-service.ts'
 import { IntentsService } from '../platform/intents/intents-service.ts'
+import { Sidebar } from './components/sidebar/sidebar.tsx'
+import { IntentsAllView } from './views/intents-all/intents-all.tsx'
 
 const services = new Map()
 
@@ -16,18 +19,26 @@ const categoryService = new CategoryService(intentsService)
 services.set(CategoryService, categoryService)
 services.set(IntentsService, intentsService)
 
+function Page(Target: any) {
+  return () => <Fragment>
+    <Header />
+    <main>
+      <Sidebar />
+      <Target/>
+    </main>
+  </Fragment>
+}
+
 function App() {
   return <Fragment>
     <AppContext.Provider value={services}>
-      <LocationProvider>
-        <ErrorBoundary>
-          <Header />
-          <Router>
-            <Route path="/" component={HomeView} />
-            <NotFoundView default />
-          </Router>
-        </ErrorBoundary>
-      </LocationProvider>
+      <Router>
+        <Route path="/" component={Page(HomeView)} />
+        <Route path="/home/:id" component={Page(HomeView)} />
+        <Route path="/category/:selectedCategory" component={Page(IntentsIdView)} />
+        <Route path="/category/all" component={Page(IntentsAllView)} />
+        <Route default component={Page(NotFoundView)} />
+      </Router>
     </AppContext.Provider>
   </Fragment>
 }
