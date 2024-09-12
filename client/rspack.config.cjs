@@ -23,19 +23,19 @@ const config = {
         loader: 'builtin:swc-loader',
         options: {
           jsc: {
+            externalHelpers: false,
             parser: {
               syntax: 'typescript',
             },
-            externalHelpers: true,
-              preserveAllComments: false,
-              transform: {
-                react: {
-                  pragma: 'h',
-                  pragmaFrag: 'Fragment',
-                  throwIfNamespace: true,
-                  useBuiltins: false,
-                },
-              }
+            preserveAllComments: false,
+            transform: {
+              react: {
+                pragma: 'h',
+                pragmaFrag: 'Fragment',
+                throwIfNamespace: true,
+                useBuiltins: false,
+              },
+            }
           },
         },
         type: 'javascript/auto',

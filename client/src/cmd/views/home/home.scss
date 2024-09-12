@@ -1,8 +1,14 @@
 .view-home {
   display: flex;
-  
+
   .raw-intents {
     width: 50%;
     border-right: 1px solid #eee;
+
+    div {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+
+    }
   }
 }
