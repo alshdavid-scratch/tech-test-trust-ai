@@ -16,6 +16,7 @@ export function HomeView() {
     </PanelHeader>
 
     <BarChart 
+      style={{ height: '100%' }}
       title="Number of hits per category" 
       xLabel="Hits" 
       yLabel="Category" 

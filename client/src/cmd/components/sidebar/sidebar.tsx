@@ -45,6 +45,15 @@ export function Sidebar() {
         >{name} <span>[{categoriesService.getIntents(name)?.size}]</span>
       </Link>
     ))}
+
     <div className="heading">Automatic Categories</div>
+    {categoriesService.inferredEntries().map(([name]) => (
+      <Link 
+        class='item' 
+        href={`/category/${name}`}
+        activeClassName="active"
+        >{name} <span>[{categoriesService.getIntents(name)?.size}]</span>
+      </Link>
+    ))}
   </nav>
 }

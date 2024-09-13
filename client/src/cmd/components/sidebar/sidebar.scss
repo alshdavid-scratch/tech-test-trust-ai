@@ -5,6 +5,7 @@
   left: 0;
   width: 300px;
   border-right: 1px solid var(--color-grey-500);
+  overflow-x: scroll;
 
   .item {
     display: block;

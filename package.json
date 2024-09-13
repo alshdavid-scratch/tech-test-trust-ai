@@ -6,8 +6,11 @@
   "devDependencies": {
     "@rspack/cli": "*",
     "@rspack/core": "*",
+    "@tensorflow-models/qna": "^1.0.2",
+    "@tensorflow/tfjs-backend-webgl": "^4.21.0",
     "css-loader": "*",
     "google-charts": "^2.0.0",
+    "parse-english": "^7.0.0",
     "preact": "*",
     "preact-iso": "*",
     "preact-router": "^4.1.2",
@@ -16,5 +19,8 @@
     "sass-loader": "*",
     "style-loader": "*",
     "typescript": "*"
+  },
+  "dependencies": {
+    "compromise": "^14.14.0"
   }
 }

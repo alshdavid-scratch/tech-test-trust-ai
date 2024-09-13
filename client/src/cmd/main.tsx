@@ -1,3 +1,4 @@
+import nlp from 'compromise'
 import './index.scss'
 import { h, render, Fragment } from 'preact'
 import { AppContext } from './contexts/app.tsx'
@@ -10,6 +11,7 @@ import { CategoryService } from '../platform/categories/category-service.ts'
 import { IntentsService } from '../platform/intents/intents-service.ts'
 import { Sidebar } from './components/sidebar/sidebar.tsx'
 import { IntentsAllView } from './views/intents-all/intents-all.tsx'
+import Three from 'compromise/view/three'
 
 const services = new Map()
 
@@ -43,3 +45,47 @@ function App() {
 }
 
 render(<App />, document.querySelector('#root')!)
+
+
+// let doc = nlp('Acquire a facsimile of old receipts')
+// console.log(doc.verbs())
+// console.log(doc.text())
+
+
+const intents: Three[] = []
+const categories: Record<string, string[]> = {}
+
+for (const [intent] of intentsService.getIntents()) {
+  intents.push(nlp(intent))
+}
+
+let i = 0
+main: for (const intent of intents) {
+  i++
+  if (i === 10) break
+  console.log(intent.nouns().json())
+  // for (const [category, inner] of Object.entries(categories)) {
+  //   console.table([intent.text(), category, intent.match(nlp(category)).json().length, intent.match(nlp(category)).json()])
+  //   if (intent.match(nlp(category)).json().length === 0) {
+  //     inner.push(intent.text())
+  //     continue main
+  //   }
+  // }
+  // categories[intent.text()] = []
+}
+
+console.log(categories)
+
+// ;(() => {
+
+//   console.log(intents[0].normalize().text())
+//   // for (const intent of intents) {
+//   //   for (const intent2 of intents) {
+//   //     console.log(intent.difference(intent2).json())
+//   //   }
+
+//   //   // console.log(doc.verbs().json())
+//   //   // console.log(doc.nouns().json())
+//   //   console.log('')
+//   // }
+// })()

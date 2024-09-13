@@ -4,4 +4,4 @@ build:
   npx rspack --mode production -c ./rspack.config.cjs
 
 dev:
-  npx rspack dev --mode production -c ./rspack.config.cjs
+  npx rspack dev --mode development -c ./rspack.config.cjs
