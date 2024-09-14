@@ -1,18 +1,12 @@
 #!/bin/bash
 set -e
 
-# Default to current latest
-JUST_VERSION="$1"
-if [ "$JUST_VERSION" = "" ]; then
-  JUST_VERSION="1.26.0"
+if [ "$VERSION" = "" ]; then
+  echo version not specified
+  exit 1
 fi 
 
-# Default to home directory
-OUT_DIR="$2"
-if [ "$OUT_DIR" = "" ]; then
-  OUT_DIR="$HOME/.local/just"
-fi 
-
+INSTALL_DIR="$HOME/.local/terraform"
 URL=""
 ARCH=""
 OS=""
@@ -37,21 +31,21 @@ esac
 
 case "$OS-$ARCH" in
   linux-amd64)
-    URL=https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-x86_64-unknown-linux-musl.tar.gz
+    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_arm64.zip
   ;;
   linux-arm64)
-    URL=https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-aarch64-unknown-linux-musl.tar.gz
+    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_arm64.zip
   ;;
   macos-amd64)
-    URL=https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-x86_64-apple-darwin.tar.gz
+    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_darwin_amd64.zip
   ;;
   macos-arm64)
-    URL=https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-aarch64-apple-darwin.tar.gz
+    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_darwin_arm64.zip
   ;;
 esac
 
 if [ "$URL" == "" ]; then
-  echo "Cannot find installer for Just"
+  echo "Cannot find installer"
   exit 1
 fi
 
@@ -63,3 +57,5 @@ curl -s -L --url $URL | tar -xzf - -C $OUT_DIR
 
 export PATH="${OUT_DIR}:$PATH"
 echo "${OUT_DIR}" >> $GITHUB_PATH
+
+terraform --version

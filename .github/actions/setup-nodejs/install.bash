@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-if [ "$NODE_VERSION" = "" ]; then
-  echo Node version not specified
+if [ "$VERSION" = "" ]; then
+  echo version not specified
   exit 1
 fi 
 
-# NODE_VERSION=$(curl -sSL https://nodejs.org/download/release/ |  sed -E 's/<a.*>(v.*\..*\.[0-9]+\/)<\/a>.*/\1/g' |  grep "^v" | sed -E "s/v(.*)\//\1/g" | sort -u -k 1,1n -k 2,2n -k 3,3n -t . | grep "^${NODE_VERSION}" | tail -n1)
+# VERSION=$(curl -sSL https://nodejs.org/download/release/ |  sed -E 's/<a.*>(v.*\..*\.[0-9]+\/)<\/a>.*/\1/g' |  grep "^v" | sed -E "s/v(.*)\//\1/g" | sort -u -k 1,1n -k 2,2n -k 3,3n -t . | grep "^${VERSION}" | tail -n1)
 
 URL=""
 ARCH=""
@@ -32,16 +32,16 @@ esac
 
 case "$OS-$ARCH" in
   linux-amd64)
-    URL=https://nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz
+    URL=https://nodejs.org/download/release/v${VERSION}/node-v${VERSION}-linux-x64.tar.gz
   ;;
   linux-arm64)
-    URL=https://nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-arm64.tar.gz
+    URL=https://nodejs.org/download/release/v${VERSION}/node-v${VERSION}-linux-arm64.tar.gz
   ;;
   macos-amd64)
-    URL=https://nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-darwin-x64.tar.gz
+    URL=https://nodejs.org/download/release/v${VERSION}/node-v${VERSION}-darwin-x64.tar.gz
   ;;
   macos-arm64)
-    URL=https://nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-darwin-arm64.tar.gz
+    URL=https://nodejs.org/download/release/v${VERSION}/node-v${VERSION}-darwin-arm64.tar.gz
   ;;
 esac
 
