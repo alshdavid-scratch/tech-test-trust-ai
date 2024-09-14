@@ -29,18 +29,20 @@ case $(uname -s) in
   ;;
 esac
 
+URL="https://releases.hashicorp.com/terraform/${VERSION}/"
+
 case "$OS-$ARCH" in
   linux-amd64)
-    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
+    URL=$URL/terraform_${VERSION}_linux_amd64.zip
   ;;
   linux-arm64)
-    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_arm64.zip
+    URL=$URL/terraform_${VERSION}_linux_arm64.zip
   ;;
   macos-amd64)
-    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_darwin_amd64.zip
+    URL=$URL/terraform_${VERSION}_darwin_amd64.zip
   ;;
   macos-arm64)
-    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_darwin_arm64.zip
+    URL=$URL/terraform_${VERSION}_darwin_arm64.zip
   ;;
 esac
 
