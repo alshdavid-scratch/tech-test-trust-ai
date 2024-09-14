@@ -14,7 +14,7 @@ runs:
       shell: bash
       env:
         NODE_VERSION: ${{ inputs.version }}
-      run: "bash .github/actions/setup-nodejs/install-nodejs.bash"
+      run: source .github/actions/setup-nodejs/install-nodejs.bash
 
     - name: "Install Nodejs" 
       if: ${{ runner.os == 'Windows' && runner.arch == 'X64' }}
