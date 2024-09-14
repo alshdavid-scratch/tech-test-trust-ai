@@ -18,7 +18,6 @@ jobs:
       - uses: ./.github/actions/setup-just
       - uses: ./.github/actions/setup-nodejs
       - run: |
-          export PATH="${HOME}/.local/nodejs/bin:$PATH"
           node -v
           npm install
           just test
