@@ -4,6 +4,11 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 on: 
   push:
     branches:
@@ -53,6 +58,4 @@ jobs:
           name: client
           path: client/dist
       - run: |
-          ls -l 
-          ls -l client
-          ls -l client/dist
+          just deploy

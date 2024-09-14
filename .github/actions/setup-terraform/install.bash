@@ -51,11 +51,11 @@ fi
 
 echo $URL
 
-test -d $OUT_DIR && rm -rf $OUT_DIR
-mkdir $OUT_DIR
-curl -s -L --url $URL | tar -xzf - -C $OUT_DIR
+test -d $INSTALL_DIR && rm -rf $INSTALL_DIR
+mkdir $INSTALL_DIR
+curl -s -L --url $URL | tar -xzf - -C $INSTALL_DIR
 
-export PATH="${OUT_DIR}:$PATH"
-echo "${OUT_DIR}" >> $GITHUB_PATH
+export PATH="${INSTALL_DIR}:$PATH"
+echo "${INSTALL_DIR}" >> $GITHUB_PATH
 
 terraform --version
