@@ -13,19 +13,5 @@ runs:
       if: ${{ runner.os != 'Windows' }}
       shell: bash
       env:
-        JUST_VERSION: ${{ inputs.version }}
-      run: "bash .github/actions/setup-just/install-just.bash"
-
-    - name: "Install Just" 
-      if: ${{ runner.os == 'Windows' && runner.arch == 'X64' }}
-      shell: powershell
-      env:
-        JUST_VERSION: ${{ inputs.version }}
-      run: . .github/actions/setup-just/install-just.ps1
-
-    - name: "Install Just" 
-      if: ${{ runner.os == 'Windows' && runner.arch == 'ARM64' }}
-      shell: powershell
-      env:
-        JUST_VERSION: ${{ inputs.version }}
-      run: exit 1
+        VERSION: ${{ inputs.version }}
+      run: source ${github.action_path}/install.bash

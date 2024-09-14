@@ -3,7 +3,7 @@ description: "Install Terraform"
 
 inputs:
   version:
-    description: 'version'
+    description: 'Terraform version'
     default: "1.9.5"
 
 runs:

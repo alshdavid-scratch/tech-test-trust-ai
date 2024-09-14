@@ -13,5 +13,5 @@ runs:
       if: ${{ runner.os != 'Windows' }}
       shell: bash
       env:
-        NODE_VERSION: ${{ inputs.version }}
+        VERSION: ${{ inputs.version }}
       run: source ${github.action_path}/install.bash
