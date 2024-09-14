@@ -4,7 +4,8 @@ resource "random_string" "random" {
   upper = false
 } 
 
+
 variable "bucket_name" {
   type = string
-  default = "trust-ai-code-challenge-${random_string.random.result}"
+  default = null
 }

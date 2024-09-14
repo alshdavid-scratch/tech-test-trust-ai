@@ -8,3 +8,6 @@ dev:
 
 test:
   cd client && just test
+
+deploy *ARGS:
+  cd terraform && terraform init && terraform apply {{ARGS}}

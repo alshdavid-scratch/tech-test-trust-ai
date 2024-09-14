@@ -4,6 +4,9 @@
 dist/
 build/
 publish/
+*.tfstate*
+.terraform/
+.terraform.*
 
 # dependencies
 node_modules/
