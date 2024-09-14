@@ -1,17 +1,9 @@
 #!/bin/bash
 set -e
 
-# Default to LTS
-NODE_VERSION="$1"
 if [ "$NODE_VERSION" = "" ]; then
   echo Node version not specified
   exit 1
-fi 
-
-# Default to home directory
-OUT_DIR="$2"
-if [ "$OUT_DIR" = "" ]; then
-  OUT_DIR="$HOME/.local/nodejs"
 fi 
 
 # NODE_VERSION=$(curl -sSL https://nodejs.org/download/release/ |  sed -E 's/<a.*>(v.*\..*\.[0-9]+\/)<\/a>.*/\1/g' |  grep "^v" | sed -E "s/v(.*)\//\1/g" | sort -u -k 1,1n -k 2,2n -k 3,3n -t . | grep "^${NODE_VERSION}" | tail -n1)
