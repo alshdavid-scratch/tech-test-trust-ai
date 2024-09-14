@@ -14,4 +14,4 @@ runs:
       shell: bash
       env:
         VERSION: ${{ inputs.version }}
-      run: source ${github.action_path}/install.bash
+      run: source ${{ github.action_path }}/install.bash
