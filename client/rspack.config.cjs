@@ -28,6 +28,7 @@ const config = {
             externalHelpers: false,
             parser: {
               syntax: 'typescript',
+              decorators: true,
             },
             preserveAllComments: false,
             transform: {
@@ -49,7 +50,7 @@ const config = {
       },
       {
         test: /\.(txt)$/,
-        type: "asset/source",
+        type: "asset/resource",
       },
     ]
   },

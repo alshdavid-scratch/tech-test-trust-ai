@@ -1,49 +1,51 @@
 import { IntentsMap, IntentsService } from "../intents/intents-service.ts"
+import { ChangeNotifier, Notifiable, OnChange } from "../preact/reactive.ts"
 
 const KEY = 'trust-ai-categories'
 
 // TODO persist to backend
-export class CategoryService extends EventTarget {
+export class CategoryService implements Notifiable {
+  [OnChange]: ChangeNotifier
   #inner: Record<string, string[]>
   #intentsService: IntentsService
 
   constructor(
     intentsService: IntentsService
   ) {
-    super()
+    this[OnChange] = new ChangeNotifier()
     this.#intentsService = intentsService
     const stored = window.localStorage.getItem(KEY)
     if (stored) {
       this.#inner = JSON.parse(stored)
     } else {
       this.#inner = {}
-    }
+    }    
   }
 
-  newCategory(name: string) {
-    this.#inner[name] = []
+  newCategory(categoryName: string) {
+    this.#inner[categoryName] = []
     window.localStorage.setItem(KEY, JSON.stringify(this.#inner))
-    this.dispatchEvent(new Event('change'))
+    this[OnChange].notify()
   }
 
-  removeCategory(name: string) {
-    delete this.#inner[name]
+  removeCategory(categoryName: string) {
+    delete this.#inner[categoryName]
     window.localStorage.setItem(KEY, JSON.stringify(this.#inner))
-    this.dispatchEvent(new Event('change'))
+    this[OnChange].notify()
   }
 
-  addIntent(name: string, key: string) {
-    this.#inner[name] = this.#inner[name] || []
-    this.#inner[name].push(key)
+  addIntent(categoryName: string, intent: string) {
+    this.#inner[categoryName] = this.#inner[categoryName] || []
+    this.#inner[categoryName].push(intent)
     window.localStorage.setItem(KEY, JSON.stringify(this.#inner))
-    this.dispatchEvent(new Event('change'))
+    this[OnChange].notify()
   }
 
-  removeIntent(name: string, key: string) {
-    this.#inner[name] = this.#inner[name] || []
-    this.#inner[name] = this.#inner[name].filter(n => n !== key)
+  removeIntent(categoryName: string, intent: string) {
+    this.#inner[categoryName] = this.#inner[categoryName] || []
+    this.#inner[categoryName] = this.#inner[categoryName].filter(n => n !== intent)
     window.localStorage.setItem(KEY, JSON.stringify(this.#inner))
-    this.dispatchEvent(new Event('change'))
+    this[OnChange].notify()
   }
 
   getCategorySummary(): Map<string, number> {
@@ -60,11 +62,11 @@ export class CategoryService extends EventTarget {
     return new Map(intentList)
   }
 
-  getIntents(name: string): IntentsMap | undefined {
-    if (name === 'all') {
+  getIntents(categoryName: string): IntentsMap | undefined {
+    if (categoryName === 'all') {
       return this.#intentsService.getIntents()
     }
-    const intents = this.#inner[name]
+    const intents = this.#inner[categoryName]
     if (!intents) {
       return undefined
     }

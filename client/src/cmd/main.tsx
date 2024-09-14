@@ -10,11 +10,15 @@ import { CategoryService } from '../platform/categories/category-service.ts'
 import { IntentsService } from '../platform/intents/intents-service.ts'
 import { Sidebar } from './components/sidebar/sidebar.tsx'
 import { IntentsAllView } from './views/intents-all/intents-all.tsx'
+import { ApiService } from '../platform/api/api.ts'
 
 const services = new Map()
 
-const intentsService = new IntentsService()
+const apiService = new ApiService()
+const intentsService = new IntentsService(apiService)
 const categoryService = new CategoryService(intentsService)
+
+intentsService.fetchIntents()
 
 services.set(CategoryService, categoryService)
 services.set(IntentsService, intentsService)

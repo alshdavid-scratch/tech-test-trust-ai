@@ -50,21 +50,19 @@ export function IntentsIdView() {
       </PanelList>
     </Panel>
 
-    {selectedCategory !== 'all' && (
-      <Panel class="panel-add-intents">
-        <PanelHeader>
-          Add Intents
-        </PanelHeader>
+    <Panel class="panel-add-intents">
+      <PanelHeader>
+        Add Intents
+      </PanelHeader>
 
-        <PanelList>
-          {intentsToAdd.map(intent => (
-            <PanelListItem 
-              onClick={() => categoriesService.addIntent(selectedCategory, intent)}>
-              {intent}
-            </PanelListItem>
-          ))}
-        </PanelList>
-      </Panel>
-      )}
+      <PanelList>
+        {intentsToAdd.map(intent => (
+          <PanelListItem 
+            onClick={() => categoriesService.addIntent(selectedCategory, intent)}>
+            {intent}
+          </PanelListItem>
+        ))}
+      </PanelList>
+    </Panel>
   </div>
 }

@@ -12,9 +12,8 @@
     "esModuleInterop": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "lib": ["DOM", "ESNext"],
-    "types": []
+    "lib": ["ESNext"],
+    "types": ["@types/node"]
   },
-  "include": ["src"],
-  "exclude": ["src/platform/testing", "src/**/*.test.ts", "src/**/*.test.tsx"]
+  "include": ["src", "src/platform/testing", "src/**/*.test.ts", "src/**/*.test.tsx"]
 }

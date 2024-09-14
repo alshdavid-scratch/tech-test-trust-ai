@@ -1,4 +1,4 @@
-import { classNames } from '../../../platform/elements/class-names.ts';
+import { classNames } from '../../../platform/preact/class-names.ts';
 import './panel.scss'
 import { h } from "preact";
 

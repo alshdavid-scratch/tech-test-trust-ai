@@ -5,3 +5,6 @@ build:
 
 dev:
   cd client && just dev
+
+test:
+  cd client && just test

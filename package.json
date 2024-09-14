@@ -6,15 +6,16 @@
   "devDependencies": {
     "@rspack/cli": "*",
     "@rspack/core": "*",
+    "@types/node": "^22",
     "css-loader": "*",
-    "google-charts": "^2.0.0",
+    "google-charts": "*",
     "preact": "*",
-    "preact-iso": "*",
-    "preact-router": "^4.1.2",
+    "preact-router": "*",
     "sass": "*",
     "sass-embedded": "*",
     "sass-loader": "*",
     "style-loader": "*",
+    "tsx": "^4.19.1",
     "typescript": "*"
   }
 }
