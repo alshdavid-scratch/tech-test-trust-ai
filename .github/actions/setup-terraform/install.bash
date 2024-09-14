@@ -53,7 +53,10 @@ echo $URL
 
 test -d $INSTALL_DIR && rm -rf $INSTALL_DIR
 mkdir $INSTALL_DIR
-curl -s -L --url $URL | tar -xzf - -C $INSTALL_DIR
+
+cd $INSTALL_DIR
+wget $URL
+unzip terraform_${VERSION}_darwin_arm64.zip
 
 export PATH="${INSTALL_DIR}:$PATH"
 echo "${INSTALL_DIR}" >> $GITHUB_PATH
