@@ -18,6 +18,8 @@ jobs:
       - uses: ./.github/actions/setup-just
       - uses: ./.github/actions/setup-nodejs
       - run: |
+          export PATH="${HOME}/.local/nodejs/bin:$PATH"
+          node -v
           npm install
           just test
 
@@ -29,6 +31,8 @@ jobs:
       - uses: ./.github/actions/setup-just
       - uses: ./.github/actions/setup-nodejs
       - run: |
+          export PATH="${HOME}/.local/nodejs/bin:$PATH"
+          node -v
           npm install
           just build
       - uses: actions/upload-artifact@v4
@@ -39,7 +43,7 @@ jobs:
           retention-days: 1
 
   deploy:
-    name: "🔨 Build Client"
+    name: "🎢 Deploy to AWS"
     runs-on: ubuntu-latest
     needs: [tests, build]
     steps:
@@ -47,9 +51,7 @@ jobs:
       - uses: ./.github/actions/setup-just
       - uses: ./.github/actions/setup-nodejs
       - uses: actions/download-artifact@v4
-        with:
-          path: ${{ github.workspace }}/artifacts
       - run: |
-          ls -l
-          ls -l ${{ github.workspace }}/artifacts
-          ls -l ./client/dist
+          ls -l 
+          ls -l client
+          ls -l client/dist
