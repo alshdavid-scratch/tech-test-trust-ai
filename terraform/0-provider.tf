@@ -6,6 +6,14 @@ terraform {
     }
   }
 
+  cloud { 
+    organization = "alshdavid"
+
+    workspaces { 
+      name = "demo-trust-ai" 
+    } 
+  } 
+
   required_version = "~> 1.0"
 }
 
