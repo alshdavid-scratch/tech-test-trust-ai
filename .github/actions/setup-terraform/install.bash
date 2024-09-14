@@ -29,7 +29,7 @@ case $(uname -s) in
   ;;
 esac
 
-URL="https://releases.hashicorp.com/terraform/${VERSION}/"
+URL="https://releases.hashicorp.com/terraform/${VERSION}"
 
 case "$OS-$ARCH" in
   linux-amd64)
