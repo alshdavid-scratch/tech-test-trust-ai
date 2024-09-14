@@ -31,7 +31,7 @@ esac
 
 case "$OS-$ARCH" in
   linux-amd64)
-    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_arm64.zip
+    URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_amd64.zip
   ;;
   linux-arm64)
     URL=https://releases.hashicorp.com/terraform/${VERSION}/terraform_${VERSION}_linux_arm64.zip
