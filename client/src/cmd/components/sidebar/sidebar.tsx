@@ -42,7 +42,7 @@ export function Sidebar() {
         class='item' 
         href={`/category/${name}`}
         activeClassName="active"
-        >{name} <span>[{categoriesService.getIntents(name)?.size}]</span>
+        >{name} <span>[{categoriesService.getIntentsFor(name)?.size}]</span>
       </Link>
     ))}
     <div className="heading">Automatic Categories</div>

@@ -7,7 +7,6 @@ import { PanelHeader } from '../../components/panel/panel.tsx';
 
 export function HomeView() {
   const categoriesService = useInject(CategoryService)
-
   const categoryIntents = categoriesService.getCategorySummary()
 
   return <div class="view-home">

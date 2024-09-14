@@ -24,8 +24,9 @@ export function useInject<T extends unknown>(key: any): T {
   const [targetNotifiable, setTargetNotifiable] = useState<[T & Notifiable]>([target])
 
   useEffect(() => {
-    const dispose = targetNotifiable[0][OnChange].onChange(() => setTargetNotifiable([target]))
-    return () => dispose()
+    const fn = () => setTargetNotifiable([target])
+    targetNotifiable[0][OnChange].addEventListener('change', fn)
+    return () => targetNotifiable[0][OnChange].removeEventListener('change', fn)
   }, [target]);
   
   return targetNotifiable[0] as T

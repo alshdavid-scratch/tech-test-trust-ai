@@ -3,11 +3,14 @@ import test, { beforeEach, describe } from 'node:test'
 import { IntentsService } from './intents-service.ts'
 import { mockInterface, MockedInterface } from '../testing/dynamic-mock.ts'
 import { ApiService, IntentsGetResponse } from '../api/api.ts'
+import { Database } from '../preact/reactive.ts'
 
 describe('IntentsService', () => {
   let apiService: MockedInterface<ApiService>
+  let db: Database
 
   beforeEach(() => {
+    db = new Database()
     apiService = mockInterface()
 
     const response: IntentsGetResponse = { intents: [{ id: '1', intent: 'intent', count: 1 }] }
@@ -16,7 +19,7 @@ describe('IntentsService', () => {
 
   describe('constructor', () => {
     test('should not throw', (t) => {
-      assert.doesNotThrow(() => new IntentsService(apiService))
+      assert.doesNotThrow(() => new IntentsService(db, apiService))
     })
   })
 
@@ -24,7 +27,7 @@ describe('IntentsService', () => {
     let intentsService: IntentsService
 
     beforeEach(() => {
-      intentsService = new IntentsService(apiService)
+      intentsService = new IntentsService(db, apiService)
     })
 
     describe('fetchIntents', async () => {

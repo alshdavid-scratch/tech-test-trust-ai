@@ -18,7 +18,7 @@ export function IntentsIdView() {
     return <Redirect to="/category/all" />
   }
 
-  const intentsForCategory = categoriesService.getIntents(selectedCategory)
+  const intentsForCategory = categoriesService.getIntentsFor(selectedCategory)
   if (!intentsForCategory) {
     return <Redirect to="/category/all" />
   }

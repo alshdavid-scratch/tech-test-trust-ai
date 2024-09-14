@@ -11,18 +11,22 @@ import { IntentsService } from '../platform/intents/intents-service.ts'
 import { Sidebar } from './components/sidebar/sidebar.tsx'
 import { IntentsAllView } from './views/intents-all/intents-all.tsx'
 import { ApiService } from '../platform/api/api.ts'
+import { MemoryDatabase } from '../platform/preact/reactive.ts'
 
-const services = new Map()
+// DI system using React context
+const provider = new Map()
 
+const db = new MemoryDatabase()
 const apiService = new ApiService()
-const intentsService = new IntentsService(apiService)
-const categoryService = new CategoryService(intentsService)
+const intentsService = new IntentsService(db, apiService)
+const categoryService = new CategoryService(db, intentsService)
 
-intentsService.fetchIntents()
+// These will be available in the components
+// State changes in the db will automatically rerender the view
+provider.set(CategoryService, categoryService)
+provider.set(IntentsService, intentsService)
 
-services.set(CategoryService, categoryService)
-services.set(IntentsService, intentsService)
-
+// I only want the Target to rerender when the route changes
 function Page(Target: any) {
   return () => <Fragment>
     <Header />
@@ -34,8 +38,8 @@ function Page(Target: any) {
 }
 
 function App() {
-  return <Fragment>
-    <AppContext.Provider value={services}>
+  return (
+    <AppContext.Provider value={provider}>
       <Router>
         <Route path="/" component={Page(HomeView)} />
         <Route path="/category/:selectedCategory" component={Page(IntentsIdView)} />
@@ -43,7 +47,11 @@ function App() {
         <Route default component={Page(NotFoundView)} />
       </Router>
     </AppContext.Provider>
-  </Fragment>
+  )
 }
 
 render(<App />, document.querySelector('#root')!)
+
+// Fetch resources after the initial paint
+intentsService.fetchIntents()
+categoryService.loadCategories()
