@@ -48,12 +48,11 @@ resource "aws_s3_bucket_policy" "bucket-policy" {
 }
 
 resource "aws_s3_object" "upload_object" {
-  for_each = fileset("../client/dist/", "*")
+  for_each = fileset("${path.module}/../client/dist/", "*")
   bucket = aws_s3_bucket.bucket.id
   key = each.value
-  source = "../client/dist/${each.value}"
-  etag = filemd5("../client/dist/${each.value}")
-  content_type = "text/html"
+  source = "${path.module}/../client/dist/${each.value}"
+  etag = filemd5("${path.module}/../client/dist/${each.value}")
 }
 
 output "website_url" {
