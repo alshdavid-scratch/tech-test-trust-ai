@@ -1,5 +1,9 @@
 # TrustAI Code Challenge
 
+## Demo
+
+Hosted on [https://d24shup8h2pvyb.cloudfront.net](https://d24shup8h2pvyb.cloudfront.net/)
+
 ## Dependencies
 
 - [Node.js](https://nodejs.org/en/download/package-manager)
