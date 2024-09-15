@@ -10,4 +10,4 @@ test:
   cd client && just test
 
 deploy *ARGS:
-  cd terraform && terraform init && terraform apply {{ARGS}}
+  cd terraform && terraform init && terraform validate && terraform apply {{ARGS}}

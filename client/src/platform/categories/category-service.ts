@@ -25,9 +25,15 @@ export class CategoryService implements Notifiable {
   }
 
   loadCategories() {
-    return this.#col.update((categories) => {
+    return this.#col.update(async (categories) => {
       const stored = window.localStorage.getItem(KEY)
       if (!stored) {
+        // Add some demo categories if nothing is set
+        await this.#intentsService.fetchIntents()
+        const intents = Array.from(this.#intentsService.getIntents().keys())
+        Object.assign(categories, {
+          "Example Category": [intents[0], intents[1], intents[2]]
+        })
         return
       }
       Object.assign(categories, JSON.parse(stored))

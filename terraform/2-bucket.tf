@@ -60,6 +60,6 @@ resource "aws_s3_object" "upload_object" {
   content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
 }
 
-output "website_url" {
+output "bucket_url" {
   value = "http://${aws_s3_bucket_website_configuration.s3_website.website_endpoint}"
 }
