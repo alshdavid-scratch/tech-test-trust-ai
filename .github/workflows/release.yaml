@@ -53,8 +53,7 @@ jobs:
           name: client
           path: client/dist
       - run: |
-          aws s3 ls
-          just deploy
+          just deploy --auto-approve
         env:
           TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
