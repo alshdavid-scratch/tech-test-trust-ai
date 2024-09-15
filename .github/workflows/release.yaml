@@ -53,7 +53,7 @@ jobs:
           name: client
           path: client/dist
       - run: |
-          ll -l ./client/dist
+          ls -l ./client/dist
           just deploy --auto-approve
         env:
           TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
