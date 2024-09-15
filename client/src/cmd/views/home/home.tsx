@@ -13,7 +13,7 @@ export function HomeView() {
     <PanelHeader>
       <div>Overview</div>
     </PanelHeader>
-
+    
     <BarChart 
       title="Number of hits per category" 
       xLabel="Hits" 

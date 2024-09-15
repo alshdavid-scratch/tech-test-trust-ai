@@ -1,21 +1,18 @@
-// TODO get from backend
-// @ts-expect-error
-import intentsRaw from '../../../../call_intents_challenge.txt'
 import { ApiService } from '../api/api.ts'
-import { OnChange, Collection, MemoryDatabase, Notifiable } from '../preact/reactive.ts'
+import { Subscribable, OnChange, Collection, RxDb, Notifiable } from '../preact/reactive.ts'
 
 export type IntentsMap = Map<string, number>
 export class IntentsService implements Notifiable {
-  [OnChange]: EventTarget
+  [OnChange]: Subscribable
   #col: Collection<IntentsMap>
   #apiService: ApiService
 
   constructor(
-    state: MemoryDatabase,
+    state: RxDb,
     apiService: ApiService
   ) {
     this.#col = state.createCollection('intents', new Map())
-    this[OnChange] = this.#col.asEventTarget()
+    this[OnChange] = this.#col
     this.#apiService = apiService
   }
 

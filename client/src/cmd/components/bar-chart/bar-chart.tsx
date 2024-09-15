@@ -13,15 +13,19 @@ export type BarChartProps = h.JSX.HTMLAttributes<HTMLDivElement> & {
 }
 
 export function BarChart({title, xLabel, yLabel, rawData, ...props}: BarChartProps) {
-
-
   function onElement(el: HTMLDivElement | null) {
     if (!el) return
 
     function drawChart() {
       const d: Array<[string, number]> = []
+
+      const dataEntries = Object.entries(rawData)
       
-      for (const [key, value] of Object.entries(rawData)) {
+      if (dataEntries.length === 0) {
+        dataEntries.push(['No Data', 0])
+      }
+      
+      for (const [key, value] of dataEntries) {
         d.push([key, value])
       }
 
@@ -47,6 +51,10 @@ export function BarChart({title, xLabel, yLabel, rawData, ...props}: BarChartPro
     }
 
     GoogleCharts.load(drawChart);
+  }
+
+  if (Object.keys(rawData).length === 0) {
+    
   }
 
   return <div {...props} ref={onElement} class="component-bar-chart"></div>

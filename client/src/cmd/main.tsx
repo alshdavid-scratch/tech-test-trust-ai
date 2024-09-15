@@ -11,12 +11,12 @@ import { IntentsService } from '../platform/intents/intents-service.ts'
 import { Sidebar } from './components/sidebar/sidebar.tsx'
 import { IntentsAllView } from './views/intents-all/intents-all.tsx'
 import { ApiService } from '../platform/api/api.ts'
-import { MemoryDatabase } from '../platform/preact/reactive.ts'
+import { RxDb } from '../platform/preact/reactive.ts'
 
 // DI system using React context
 const provider = new Map()
 
-const db = new MemoryDatabase()
+const db = new RxDb()
 const apiService = new ApiService()
 const intentsService = new IntentsService(db, apiService)
 const categoryService = new CategoryService(db, intentsService)

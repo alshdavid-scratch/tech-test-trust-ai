@@ -1,10 +1,16 @@
 export const OnChange = Symbol('Reactive')
 
-export interface Notifiable {
-  [OnChange]: EventTarget
+export type CollectionCallback = () => any | Promise<any>
+export type CollectionCallbackDispose = () => void
+export interface Subscribable {
+  subscribe(cb: CollectionCallback): CollectionCallbackDispose
 }
 
-export class MemoryDatabase {
+export interface Notifiable {
+  [OnChange]: Subscribable
+}
+
+export class RxDb {
   collections: Map<string, Collection<any>>
 
   constructor() {
@@ -29,12 +35,20 @@ export class MemoryDatabase {
   }
 }
 
-export class Collection<T> extends EventTarget {
+
+
+export class Collection<T> {
+  #observers: Set<CollectionCallback>
   collection: T
 
   constructor(collection: T) {
-    super()
+    this.#observers = new Set()
     this.collection = collection
+  }
+
+  subscribe(cb: CollectionCallback): CollectionCallbackDispose {
+    this.#observers.add(cb)
+    return () => this.#observers.delete(cb)
   }
 
   update<R>(draftFn: (state: T) => Promise<R>): Promise<R>
@@ -42,7 +56,7 @@ export class Collection<T> extends EventTarget {
   update<R>(draftFn: (state: T) => R | Promise<R>): R | Promise<R> {
     return (async () => {
       const result = await draftFn(this.collection)
-      this.dispatchEvent(new Event('change'))
+      this.#observers.forEach(cb => cb())
       return result
     })()
   }
@@ -50,8 +64,16 @@ export class Collection<T> extends EventTarget {
   get(): T {
     return this.collection
   }
+}
 
-  asEventTarget(): EventTarget {
-    return this
+export function mergeNotifications(...notifiers: Subscribable[]): Subscribable {
+  return {
+    subscribe(cb) {
+      const subs: Array<CollectionCallbackDispose> = []
+      for (const notifier of notifiers) {
+        subs.push(notifier.subscribe(cb))
+      }
+      return () => subs.forEach(dispose => dispose())
+    }
   }
 }

@@ -3,14 +3,14 @@ import test, { beforeEach, describe } from 'node:test'
 import { IntentsService } from './intents-service.ts'
 import { mockInterface, MockedInterface } from '../testing/dynamic-mock.ts'
 import { ApiService, IntentsGetResponse } from '../api/api.ts'
-import { MemoryDatabase } from '../preact/reactive.ts'
+import { RxDb } from '../preact/reactive.ts'
 
 describe('IntentsService', () => {
   let apiService: MockedInterface<ApiService>
-  let db: MemoryDatabase
+  let db: RxDb
 
   beforeEach(() => {
-    db = new MemoryDatabase()
+    db = new RxDb()
     apiService = mockInterface()
 
     const response: IntentsGetResponse = { intents: [{ id: '1', intent: 'intent', count: 1 }] }

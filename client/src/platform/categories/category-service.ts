@@ -1,5 +1,5 @@
 import { IntentsMap, IntentsService } from "../intents/intents-service.ts"
-import { Collection, MemoryDatabase, Notifiable, OnChange } from "../preact/reactive.ts"
+import { Subscribable, Collection, RxDb, Notifiable, OnChange, mergeNotifications } from "../preact/reactive.ts"
 
 const KEY = 'trust-ai-categories'
 
@@ -7,16 +7,16 @@ type CategorySchema = Record<string, string[]>
 
 // TODO persist to backend
 export class CategoryService implements Notifiable {
-  [OnChange]: EventTarget
+  [OnChange]: Subscribable
   #col: Collection<CategorySchema>
   #intentsService: IntentsService
 
   constructor(
-    db: MemoryDatabase,
+    db: RxDb,
     intentsService: IntentsService
   ) {
     this.#col = db.createCollection('categories', {})
-    this[OnChange] = this.#col.asEventTarget()
+    this[OnChange] = mergeNotifications(this.#col, intentsService[OnChange])
     this.#intentsService = intentsService
   }
 
