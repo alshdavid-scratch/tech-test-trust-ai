@@ -53,6 +53,7 @@ jobs:
           name: client
           path: client/dist
       - run: |
+          aws s3 ls
           just deploy
         env:
           TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
