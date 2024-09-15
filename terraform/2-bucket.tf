@@ -47,12 +47,17 @@ resource "aws_s3_bucket_policy" "bucket-policy" {
   )
 }
 
+locals {
+  mime_types = jsondecode(file("${path.module}/mime-types.json"))
+}
+
 resource "aws_s3_object" "upload_object" {
   for_each = fileset("${path.module}/../client/dist/", "*")
   bucket = aws_s3_bucket.bucket.id
   key = each.value
   source = "${path.module}/../client/dist/${each.value}"
   etag = filemd5("${path.module}/../client/dist/${each.value}")
+  content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
 }
 
 output "website_url" {
